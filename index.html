@@ -62,7 +62,7 @@
             document.getElementById('destination').addEventListener('change', onChangeHandler);
             document.getElementById('mode').addEventListener('change', onChangeHandler);
         }
-function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
             directionsService.route({
                 origin: document.getElementById('source').value,
                 destination: document.getElementById('destination').value,
@@ -76,7 +76,23 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
                 }
             });
         }
+        function showSteps(directionResult) {
+            var myRoute = directionResult.routes[0].legs[0];
+            var instructions = '<h3 class="distance">Quãng đường: ' + myRoute.distance.text + '</h3><br>';
+            instructions += '<h5 class="duration">Thời gian: ' + myRoute.duration.text + '</h5>';
+            instructions += '<h5 class="start_address">Từ: ' + myRoute.start_address + '</h5>';
+            instructions += '<h5 class="end_address">Đến: ' + myRoute.end_address + '</h5>';
+            instructions += '<ol>';
+            var steps = '';
 
+            for (var i = 0; i < myRoute.steps.length; i++) {
+                steps += '<li>' + myRoute.steps[i].instructions + '</li>';
+            }
+            instructions += '<p class="steps">' + steps + '</p>';
+            instructions += '</ol>';
+            document.getElementById("instructions").innerHTML = instructions;
+        }
+</script>
 </body>
 
 </html>
